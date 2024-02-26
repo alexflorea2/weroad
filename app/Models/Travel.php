@@ -2,10 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Travel extends Model
+class Travel extends UuidModel
 {
-    use HasFactory;
+    protected $table = 'travels';
+
+    public function moods()
+    {
+        return $this->belongsToMany(
+            Mood::class,
+            'travel_mood',
+            'travelId',
+            'moodId'
+        )
+            ->withPivot('weight');
+    }
 }

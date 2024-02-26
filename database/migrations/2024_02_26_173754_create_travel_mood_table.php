@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('travel_mood', function (Blueprint $table) {
-            $table->uuid()->primary();
              $table->uuid('moodId');
              $table->foreign('moodId')->references('id')->on('moods')->onDelete('cascade');
              $table->uuid('travelId');
              $table->foreign('travelId')->references('id')->on('travels')->onDelete('cascade');
+            $table->integer('weight');
+            $table->primary(['travelId', 'moodId']);
             $table->timestamps();
         });
     }

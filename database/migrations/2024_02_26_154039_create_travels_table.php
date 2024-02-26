@@ -15,10 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->boolean('isPublic')->default(false);
             $table->string('slug');
-            $table->string('title');
+            $table->string('name');
             $table->text('description');
             $table->integer('numberOfDays');
-            $table->json('moods');
             $table->timestamps();
         });
     }
