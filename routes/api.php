@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\ToursController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// API Version 1
+Route::prefix('v1')->group(function () {
+    // Public routes
+    Route::get('/tours', [ToursController::class, 'list']);
+
+    // Protected routes
+    Route::middleware('auth:sanctum')->group(function () {
+        // Admin and editor routes...
+    });
 });
