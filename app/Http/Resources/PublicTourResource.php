@@ -40,5 +40,4 @@ class PublicTourResource extends JsonResource
             }),
         ];
     }
-
 }

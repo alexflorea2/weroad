@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Dto\TravelFromRequestDto;
+use App\Events\TravelCreated;
+use App\Events\TravelEdited;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateTravelRequest;
 use App\Http\Requests\UpdateTravelRequest;
@@ -15,10 +17,9 @@ use Throwable;
 class TravelsController extends Controller
 {
     public function __construct(
-        private readonly TravelService   $travelService,
+        private readonly TravelService $travelService,
         private readonly LoggerInterface $logger
-    )
-    {
+    ) {
 
     }
 
@@ -33,7 +34,10 @@ class TravelsController extends Controller
                     ->setDescription($validated['description'])
                     ->setNumberOfDays($validated['numberOfDays'])
                     ->setMoods($validated['moods'])
+                    ->setIsPublic($validated['isPublic'] ?? false)
             );
+            TravelCreated::dispatch();
+
             return new TravelResource($travel->load('moods'));
         } catch (Throwable $throwable) {
             $this->logger->error('Error creating travel', [
@@ -51,7 +55,7 @@ class TravelsController extends Controller
     {
         $travelToUpdate = Travel::where('id', $travelUuid)->first();
 
-        if(!$travelToUpdate) {
+        if (! $travelToUpdate) {
             return response()->json([
                 'error' => 'resource not found',
             ], 404);
@@ -67,7 +71,10 @@ class TravelsController extends Controller
                     ->setDescription($validated['description'])
                     ->setNumberOfDays($validated['numberOfDays'])
                     ->setMoods($validated['moods'])
+                    ->setIsPublic($validated['isPublic'] ?? false)
             );
+            TravelEdited::dispatch();
+
             return new TravelResource($travel->load('moods'));
         } catch (Throwable $throwable) {
             $this->logger->error('Error updating travel', [

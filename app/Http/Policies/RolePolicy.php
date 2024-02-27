@@ -13,8 +13,6 @@ class RolePolicy
     /**
      * Determine whether the user has the specified role.
      *
-     * @param  \App\Models\User  $user
-     * @param  string  $roleName
      * @return bool
      */
     public function hasRole(User $user, string $roleName)

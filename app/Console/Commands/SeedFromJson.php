@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\Tour;
 use App\Models\Travel;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -88,17 +89,18 @@ class SeedFromJson extends Command
             $travel->name = $travelData['name'];
             $travel->description = $travelData['description'];
             $travel->numberOfDays = $travelData['numberOfDays'];
+            $travel->isPublic = true;
             $travel->save();
 
             // Handle moods
             foreach ($travelData['moods'] as $moodName => $weight) {
                 $mood = Mood::where(['name' => $moodName])->first();
-                if(!$mood) {
+                if (! $mood) {
                     $mood = new Mood();
                     $mood->name = $moodName;
                     $mood->save();
                 }
-                $travel->moods()->syncWithoutDetaching([(string)$mood->id => ['weight' => $weight]]);
+                $travel->moods()->syncWithoutDetaching([(string) $mood->id => ['weight' => $weight]]);
             }
         }
 
@@ -115,8 +117,8 @@ class SeedFromJson extends Command
             $tour->id = $tourData['id'];
             $tour->travelId = $tourData['travelId'];
             $tour->name = $tourData['name'];
-            $tour->startingDate = $tourData['startingDate'];
-            $tour->endingDate = $tourData['endingDate'];
+            $tour->startingDate = Carbon::createFromFormat('Y-m-d', $tourData['startingDate']);
+            $tour->endingDate = Carbon::createFromFormat('Y-m-d', $tourData['endingDate']);
             $tour->price = $tourData['price'] / 100;
             $tour->save();
         }

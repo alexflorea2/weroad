@@ -27,7 +27,8 @@ class CreateTravelRequest extends FormRequest
             'title' => 'required|string|max:255|unique:travels,name',
             'numberOfDays' => 'required|integer|min:1',
             'description' => 'string',
-            'moods' => ['sometimes',new MoodsRequestRule()]
+            'isPublic' => 'sometimes|boolean',
+            'moods' => ['sometimes', new MoodsRequestRule()],
         ];
     }
 }

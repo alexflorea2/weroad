@@ -24,10 +24,11 @@ class UpdateTravelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'numberOfDays' => 'required|integer|min:1',
-            'description' => 'string',
-            'moods' => ['sometimes',new MoodsRequestRule()]
+            'title' => 'sometimes|string|max:255',
+            'numberOfDays' => 'sometimes|integer|min:1',
+            'description' => 'sometimes|string',
+            'isPublic' => 'sometimes|boolean',
+            'moods' => ['sometimes', new MoodsRequestRule()],
         ];
     }
 }

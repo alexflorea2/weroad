@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Tour;
 use App\Models\Travel;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
@@ -25,9 +26,9 @@ class TourTest extends TestCase
         $tour = new Tour();
         $tour->price = 699;
         $tour->travelId = Travel::query()->first()->id;
-        $tour->name = "test price";
-        $tour->startingDate = new \DateTime();
-        $tour->endingDate = new \DateTime();
+        $tour->name = 'test price';
+        $tour->startingDate = new Carbon();
+        $tour->endingDate = new Carbon();
 
         // trigger any model events or mutators
         $tour->save();

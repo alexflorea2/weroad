@@ -1,0 +1,94 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Weroad Api test",
+        "description": "API test",
+        "contact": {
+            "email": "andu2flo@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:81/api/v1",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/tours/{travelSlug}": {
+            "get": {
+                "tags": [
+                    "Tours"
+                ],
+                "summary": "Get tours for a specific travel including optional filters",
+                "operationId": "38661313f8d363079e0a11f65ea366bb",
+                "parameters": [
+                    {
+                        "name": "travelSlug",
+                        "in": "path",
+                        "description": "The slug of the travel",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "priceFrom",
+                        "in": "query",
+                        "description": "Filter tours starting from this price",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "priceTo",
+                        "in": "query",
+                        "description": "Filter tours up to this price",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "dateFrom",
+                        "in": "query",
+                        "description": "Filter tours starting from this date",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "dateTo",
+                        "in": "query",
+                        "description": "Filter tours up to this date",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "sortPrice",
+                        "in": "query",
+                        "description": "Sort tours by price",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

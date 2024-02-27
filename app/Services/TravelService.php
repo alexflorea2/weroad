@@ -2,11 +2,8 @@
 
 namespace App\Services;
 
-
 use App\Dto\TravelFromRequestDto;
-use App\Dto\ToursFilters;
 use App\Models\Mood;
-use App\Models\Tour;
 use App\Models\Travel;
 
 class TravelService
@@ -16,7 +13,7 @@ class TravelService
      */
     public function createTravel(TravelFromRequestDto $createTravelDto)
     {
-        if(Travel::where('name',$createTravelDto->getTitle())->first()) {
+        if (Travel::where('name', $createTravelDto->getTitle())->first()) {
             throw new \Exception('Travel exists');
         }
 
@@ -24,16 +21,17 @@ class TravelService
         $travel->name = $createTravelDto->getTitle();
         $travel->description = $createTravelDto->getDescription();
         $travel->numberOfDays = $createTravelDto->getNumberOfDays();
+        $travel->isPublic = $createTravelDto->getIsPublic();
         $travel->save();
 
         foreach ($createTravelDto->getMoods() as $moodName => $weight) {
             $mood = Mood::where(['name' => $moodName])->first();
-            if(!$mood) {
+            if (! $mood) {
                 $mood = new Mood();
                 $mood->name = $moodName;
                 $mood->save();
             }
-            $travel->moods()->syncWithoutDetaching([(string)$mood->id => ['weight' => $weight]]);
+            $travel->moods()->syncWithoutDetaching([(string) $mood->id => ['weight' => $weight]]);
         }
 
         return $travel;
@@ -44,18 +42,28 @@ class TravelService
      */
     public function updateTravel(Travel $travel, TravelFromRequestDto $createTravelDto)
     {
-        $travel->name = $createTravelDto->getTitle();
-        $travel->description = $createTravelDto->getDescription();
-        $travel->numberOfDays = $createTravelDto->getNumberOfDays();
+        if (! is_null($createTravelDto->getTitle())) {
+            $travel->name = $createTravelDto->getTitle();
+        }
+        if (! is_null($createTravelDto->getDescription())) {
+            $travel->description = $createTravelDto->getDescription();
+        }
+        if (! is_null($createTravelDto->getNumberOfDays())) {
+            $travel->numberOfDays = $createTravelDto->getNumberOfDays();
+        }
+        $travel->isPublic = $createTravelDto->getIsPublic();
+
         $travel->save();
 
-        $moodData = [];
-        foreach ($createTravelDto->getMoods() as $moodName => $weight) {
-            $mood = Mood::firstOrCreate(['name' => $moodName]);
-            $moodData[$mood->id] = ['weight' => $weight];
-        }
+        if (! empty($createTravelDto->getMoods())) {
+            $moodData = [];
+            foreach ($createTravelDto->getMoods() as $moodName => $weight) {
+                $mood = Mood::firstOrCreate(['name' => $moodName]);
+                $moodData[$mood->id] = ['weight' => $weight];
+            }
 
-        $travel->moods()->sync($moodData);
+            $travel->moods()->sync($moodData);
+        }
 
         return $travel;
     }

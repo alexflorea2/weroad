@@ -1,4 +1,8 @@
-POST http://localhost/api/auth/login
+### Set variables
+@baseUrl = http://localhost:81
+
+### login
+POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
@@ -11,15 +15,16 @@ Content-Type: application/json
 %}
 
 ### create travel
-POST http://localhost/api/v1/admin/travels
+POST {{baseUrl}}/api/v1/admin/travels
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}
 
 {
-    "title": "maramures 360 1",
+    "title": "maramures 360",
     "numberOfDays": 3,
     "description": "Lorem ipsum ....",
+    "isPublic": true,
     "moods": {
         "nature": 100,
         "relax": 30,
@@ -28,3 +33,22 @@ Authorization: Bearer {{auth_token}}
         "party": 10
     }
 }
+
+> {%
+    client.global.set("latest_travel_id", response.body.data.id);
+%}
+
+### create tour
+POST {{baseUrl}}/api/v1/admin/tours
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+    "title": "maramures 360",
+    "travelId": "{{latest_travel_id}}",
+    "price": 6969,
+    "startingDate": "2024-03-12",
+    "endingDate": "2024-03-27"
+}
+

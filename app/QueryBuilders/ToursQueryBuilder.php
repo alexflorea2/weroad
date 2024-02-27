@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 class ToursQueryBuilder extends Builder
 {
     final public const SORT_ASCENDING = 'asc';
+
     final public const SORT_DESCENDING = 'desc';
+
     public function filterBySlug(string $slug): static
     {
         return $this->whereHas('travel', function ($query) use ($slug) {
@@ -15,13 +17,20 @@ class ToursQueryBuilder extends Builder
         });
     }
 
+    public function public($isPublic = true): static
+    {
+        return $this->whereHas('travel', function ($query) use ($isPublic) {
+            $query->where('isPublic', $isPublic);
+        });
+    }
+
     public function priceRange($priceFrom = null, $priceTo = null): static
     {
-        if (!is_null($priceFrom)) {
+        if (! is_null($priceFrom)) {
             $this->where('price', '>=', $priceFrom * 100);
         }
 
-        if (!is_null($priceTo)) {
+        if (! is_null($priceTo)) {
             $this->where('price', '<=', $priceTo * 100);
         }
 
@@ -30,11 +39,11 @@ class ToursQueryBuilder extends Builder
 
     public function dateRange($dateFrom = null, $dateTo = null): static
     {
-        if (!is_null($dateFrom)) {
+        if (! is_null($dateFrom)) {
             $this->where('startingDate', '>=', $dateFrom);
         }
 
-        if (!is_null($dateTo)) {
+        if (! is_null($dateTo)) {
             $this->where('startingDate', '<=', $dateTo);
         }
 

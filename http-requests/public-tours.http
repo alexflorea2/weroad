@@ -1,11 +1,14 @@
+### Set variables
+@baseUrl = http://localhost:81
+
 ### Get tours
-GET http://localhost/api/v1/tours/jordan-360
+GET {{baseUrl}}/api/v1/tours/jordan-360
 Accept: application/json
 
 ### Get tours filtered by price From
-GET http://localhost/api/v1/tours/jordan-360?priceFrom=1901
+GET {{baseUrl}}/api/v1/tours/jordan-360?priceFrom=1901
 Accept: application/json
 
 ### Get 404 route
-GET http://localhost/api/v1/travels
+GET {{baseUrl}}/api/v1/travels
 Accept: application/json

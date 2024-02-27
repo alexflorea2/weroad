@@ -33,5 +33,4 @@ class TravelResource extends JsonResource
 
         return $travelArray;
     }
-
 }

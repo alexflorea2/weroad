@@ -10,6 +10,7 @@ use Tests\TestCase;
 class ToursQueryBuilderTest extends TestCase
 {
     use RefreshDatabase;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -24,7 +25,11 @@ class ToursQueryBuilderTest extends TestCase
         $filteredTours = $queryBuilder->filterBySlug('jordan-360')->get();
 
         $this->assertNotEmpty($filteredTours);
-        $this->assertContains($filteredTours->first()->id,["0be966b8-0a9b-4220-b9b2-e49d2cc0c2ab"]);
+        $this->assertContains($filteredTours->first()->id, [
+            '0be966b8-0a9b-4220-b9b2-e49d2cc0c2ab',
+            '2a0edc99-c9fe-4206-8da5-413586667a21',
+            '7f0ff8cc-6b19-407e-9915-279ad76c0b5c',
+        ]);
     }
 
     /** @test */
@@ -40,7 +45,7 @@ class ToursQueryBuilderTest extends TestCase
     public function is_in_price_range()
     {
         $queryBuilder = Tour::query();
-        $filteredTours = $queryBuilder->priceRange(1999,2149)->get();
+        $filteredTours = $queryBuilder->priceRange(1999, 2149)->get();
 
         $this->assertCount(3, $filteredTours);
     }
@@ -53,5 +58,4 @@ class ToursQueryBuilderTest extends TestCase
 
         $this->assertCount(3, $filteredTours);
     }
-
 }

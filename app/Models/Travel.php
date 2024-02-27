@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Str;
 
 class Travel extends UuidModel
@@ -15,13 +13,13 @@ class Travel extends UuidModel
         parent::boot();
 
         static::creating(function ($model) {
-            if(empty($model->slug)) {
+            if (empty($model->slug)) {
                 $model->slug = static::generateUniqueSlug($model->name);
             }
         });
 
         static::updating(function ($model) {
-            if ($model->isDirty('title')) {
+            if ($model->isDirty('name')) {
                 $model->slug = static::generateUniqueSlug($model->name);
             }
         });
@@ -30,7 +28,8 @@ class Travel extends UuidModel
     protected static function generateUniqueSlug($title)
     {
         $slug = Str::slug($title);
-        $count = static::where("slug", $slug)->count();
+        $count = static::where('slug', $slug)->count();
+
         return $count ? "{$slug}-{$count}" : $slug;
     }
 

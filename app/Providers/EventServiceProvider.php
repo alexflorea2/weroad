@@ -25,22 +25,22 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        TourCreated::class=>[
+        TourCreated::class => [
             ClearToursCache::class,
         ],
-        TourEdited::class=>[
+        TourEdited::class => [
             ClearToursCache::class,
         ],
-        TourDeleted::class=>[
+        TourDeleted::class => [
             ClearToursCache::class,
         ],
-        TravelCreated::class=>[
+        TravelCreated::class => [
             ClearToursCache::class,
         ],
-        TravelEdited::class=>[
+        TravelEdited::class => [
             ClearToursCache::class,
         ],
-        TravelDeleted::class=>[
+        TravelDeleted::class => [
             ClearToursCache::class,
         ],
     ];

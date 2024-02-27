@@ -1,7 +1,7 @@
 <?php
 
-
 use App\Models\Tour;
+use App\Models\Travel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Artisan;
@@ -27,7 +27,7 @@ class ToursApiTest extends TestCase
             'price_to' => 2000,
         ];
 
-        $url = "/api/v1/tours/{$slug}?" . http_build_query($filters);
+        $url = "/api/v1/tours/{$slug}?".http_build_query($filters);
 
         $response = $this->getJson($url)
             ->assertStatus(Response::HTTP_OK);
@@ -41,4 +41,26 @@ class ToursApiTest extends TestCase
         $this->assertEqualsCanonicalizing($expectedIds, array_column($data['data'], 'id'));
     }
 
+    /** @test */
+    public function test_list_only_public_travels(): void
+    {
+        $slug = 'jordan-360';
+        $filters = [
+            'price_from' => 1000,
+            'price_to' => 2000,
+        ];
+
+        $travel = Travel::where('slug', $slug)->first();
+        $travel->isPublic = false;
+        $travel->save();
+
+        $url = "/api/v1/tours/{$slug}?".http_build_query($filters);
+
+        $response = $this->getJson($url)
+            ->assertStatus(Response::HTTP_OK);
+
+        $data = json_decode($response->content(), true);
+
+        $this->assertCount(0, $data['data']);
+    }
 }

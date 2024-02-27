@@ -16,12 +16,12 @@ class MoodsRequestRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
-            if (!is_array($value) || empty($value)) {
+            if (! is_array($value) || empty($value)) {
                 $fail('Could not parse');
             }
 
             foreach ($value as $key => $val) {
-                if (!is_string($key) || !isset($val)) {
+                if (! is_string($key) || ! isset($val)) {
                     $fail('Structure should be key:value');
                 }
             }

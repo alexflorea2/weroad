@@ -1,4 +1,8 @@
-POST http://localhost/api/auth/login
+### Set variables
+@baseUrl = http://localhost:81
+
+### login
+POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
@@ -11,7 +15,7 @@ Content-Type: application/json
 %}
 
 ### update travel
-PATCH http://localhost/api/v1/admin/travels/d408be33-aa6a-4c73-a2c8-58a70ab2ba4d
+PATCH {{baseUrl}}/api/v1/admin/travels/d408be33-aa6a-4c73-a2c8-58a70ab2ba4d
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer {{auth_token}}

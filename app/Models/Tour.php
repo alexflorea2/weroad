@@ -29,4 +29,14 @@ class Tour extends UuidModel
     {
         $this->attributes['price'] = $value * 100;
     }
+
+    public function setStartingDateAttribute($value)
+    {
+        $this->attributes['startingDate'] = $value->toDateString();
+    }
+
+    public function setEndingDateAttribute($value)
+    {
+        $this->attributes['endingDate'] = $value->toDateString();
+    }
 }
