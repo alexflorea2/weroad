@@ -1,66 +1,52 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Setup Instructions
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Getting Started
 
-## About Laravel
+### Clone the Repository
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+First, clone the repository to your local machine:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```git clone <repository-url>```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Build and Start Containers
 
-## Learning Laravel
+Run the following command to build and start the Docker containers. This command also detaches the containers, allowing
+them to run in the background:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```docker-compose up --build -d```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+**Note:** If you encounter any port conflicts, adjust the port settings in the `docker-compose.yml` file accordingly.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Running Tests
 
-## Laravel Sponsors
+To run tests, execute the following command from within the `alex_weroad_app` Docker container:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```vendor/bin/phpunit;```
 
-### Premium Partners
+## Database Seeding
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+The database is seeded using provided JSON files, creating two users with distinct roles: an admin and an editor. Use
+the following credentials for both:
 
-## Contributing
+- Admin: `admin@weroad.com` (password: `admin@weroad.com`)
+- Editor: `editor@weroad.com` (password: `editor@weroad.com`)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+To seed the database, run:
+```php artisan app:seed-from-json```
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Implementation Details
 
-## Security Vulnerabilities
+- A simple role relationship is implemented, alongside a more complex relationship showcasing moods.
+- Database seeding is accomplished using custom JSON files.
+- A role policy has been integrated with a `CheckRole` middleware for authorization.
+- Validation is handled by custom `FormRequest` classes for each action, ensuring robust data integrity.
+- Controllers and models are designed to be slim, with controllers validating input and services handling business logic.
+- Data retrieval is performed by services, which leverage various models and parse the output using Resource classes.
+- A caching mechanism is implemented for public endpoints, invalidated upon creation or editing events. This feature is designed for further refinement.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Documentation and Testing
 
-## License
+- Public tour endpoints are documented and accessible via Swagger at: http://localhost:8082/
+- Additional endpoints can be tested using the HTTP request files located in the `http-request` folder, compatible with both PhpStorm and VS Code HTTP clients.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
