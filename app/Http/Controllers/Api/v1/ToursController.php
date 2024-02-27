@@ -16,6 +16,7 @@ class ToursController extends Controller
 {
     public function __construct(private readonly ToursService $toursService){}
     public function list(TourListRequest $request, string $travelSlug): JsonResponse{
+        TourCreated::dispatch();
         $requestFilters = (new ToursFilters())
             ->setSlug($travelSlug)
             ->setDateFrom($request->get('dateFrom'))

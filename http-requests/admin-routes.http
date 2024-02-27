@@ -1,0 +1,30 @@
+POST http://localhost/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@weroad.com",
+    "password": "admin@weroad.com"
+}
+
+> {%
+    client.global.set("auth_token", response.body.data.token);
+%}
+
+### create travel
+POST http://localhost/api/v1/admin/travels
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{auth_token}}
+
+{
+    "title": "maramures 360 1",
+    "numberOfDays": 3,
+    "description": "Lorem ipsum ....",
+    "moods": {
+        "nature": 100,
+        "relax": 30,
+        "history": 10,
+        "culture": 20,
+        "party": 10
+    }
+}

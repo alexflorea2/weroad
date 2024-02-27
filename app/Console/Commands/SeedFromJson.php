@@ -6,8 +6,10 @@ use App\Models\Mood;
 use App\Models\Role;
 use App\Models\Tour;
 use App\Models\Travel;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class SeedFromJson extends Command
 {
@@ -32,6 +34,7 @@ class SeedFromJson extends Command
     {
         DB::transaction(function () {
             $this->seedRoles();
+            $this->seedUsers();
             $this->seedTravels();
             $this->seedTours();
         });
@@ -41,8 +44,8 @@ class SeedFromJson extends Command
 
     protected function seedRoles()
     {
-        $rolesPath = database_path('data/roles.json');
-        $roles = json_decode(file_get_contents($rolesPath), true);
+        $jsonPath = database_path('data/roles.json');
+        $roles = json_decode(file_get_contents($jsonPath), true);
 
         foreach ($roles as $roleData) {
             $role = new Role();
@@ -54,10 +57,29 @@ class SeedFromJson extends Command
         $this->info('Roles seeded!');
     }
 
+    protected function seedUsers()
+    {
+        $jsonPath = database_path('data/users.json');
+        $users = json_decode(file_get_contents($jsonPath), true);
+
+        foreach ($users as $userData) {
+            $user = new User();
+            $user->id = $userData['id'];
+            $user->name = $userData['name'];
+            $user->email = $userData['email'];
+            $user->roleId = $userData['roleId'];
+            $user->password = Hash::make($userData['password']);
+            $user->email_verified_at = new \DateTime();
+            $user->save();
+        }
+
+        $this->info('Roles seeded!');
+    }
+
     protected function seedTravels()
     {
-        $travelsPath = database_path('data/travels.json');
-        $travels = json_decode(file_get_contents($travelsPath), true);
+        $jsonPath = database_path('data/travels.json');
+        $travels = json_decode(file_get_contents($jsonPath), true);
 
         foreach ($travels as $travelData) {
             $travel = new Travel();
@@ -85,8 +107,8 @@ class SeedFromJson extends Command
 
     protected function seedTours()
     {
-        $toursPath = database_path('data/tours.json');
-        $tours = json_decode(file_get_contents($toursPath), true);
+        $jsonPath = database_path('data/tours.json');
+        $tours = json_decode(file_get_contents($jsonPath), true);
 
         foreach ($tours as $tourData) {
             $tour = new Tour();

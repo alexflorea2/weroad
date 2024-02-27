@@ -1,0 +1,16 @@
+[
+    {
+        "id": "baf18948-721e-90i8-aa7f-bed1a5415cb6",
+        "name": "I am Admin",
+        "email": "admin@weroad.com",
+        "password": "admin@weroad.com",
+        "roleId": "baf18948-721e-49f5-aa7f-bed1a5415cb6"
+    },
+    {
+        "id": "9442703c-dd4f-13m5-9554-a60574c408be",
+        "name": "I am Editor",
+        "email": "editor@weroad.com",
+        "password": "editor@weroad.com",
+        "roleId": "9442703c-dd4f-4e36-9554-a60574c408be"
+    }
+]
