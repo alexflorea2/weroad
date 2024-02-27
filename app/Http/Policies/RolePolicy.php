@@ -17,6 +17,7 @@ class RolePolicy
      */
     public function hasRole(User $user, string $roleName)
     {
+
         return $user->role->name === $roleName;
     }
 }

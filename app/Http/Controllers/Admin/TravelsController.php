@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateTravelRequest;
 use App\Http\Resources\TravelResource;
 use App\Models\Travel;
 use App\Services\TravelService;
+use Illuminate\Http\JsonResponse;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -23,7 +24,7 @@ class TravelsController extends Controller
 
     }
 
-    public function createTravel(CreateTravelRequest $request)
+    public function createTravel(CreateTravelRequest $request): TravelResource|JsonResponse
     {
         $validated = $request->validated();
 
@@ -51,7 +52,7 @@ class TravelsController extends Controller
         }
     }
 
-    public function updateTravel(UpdateTravelRequest $request, string $travelUuid)
+    public function updateTravel(UpdateTravelRequest $request, string $travelUuid): TravelResource|JsonResponse
     {
         $travelToUpdate = Travel::where('id', $travelUuid)->first();
 

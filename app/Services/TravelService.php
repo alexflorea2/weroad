@@ -11,7 +11,7 @@ class TravelService
     /**
      * @throws \Exception
      */
-    public function createTravel(TravelFromRequestDto $createTravelDto)
+    public function createTravel(TravelFromRequestDto $createTravelDto): Travel
     {
         if (Travel::where('name', $createTravelDto->getTitle())->first()) {
             throw new \Exception('Travel exists');
@@ -40,15 +40,15 @@ class TravelService
     /**
      * @throws \Exception
      */
-    public function updateTravel(Travel $travel, TravelFromRequestDto $createTravelDto)
+    public function updateTravel(Travel $travel, TravelFromRequestDto $createTravelDto): Travel
     {
-        if (! is_null($createTravelDto->getTitle())) {
+        if (! empty($createTravelDto->getTitle())) {
             $travel->name = $createTravelDto->getTitle();
         }
-        if (! is_null($createTravelDto->getDescription())) {
+        if (! empty($createTravelDto->getDescription())) {
             $travel->description = $createTravelDto->getDescription();
         }
-        if (! is_null($createTravelDto->getNumberOfDays())) {
+        if (! empty($createTravelDto->getNumberOfDays())) {
             $travel->numberOfDays = $createTravelDto->getNumberOfDays();
         }
         $travel->isPublic = $createTravelDto->getIsPublic();

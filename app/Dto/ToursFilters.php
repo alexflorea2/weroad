@@ -4,48 +4,48 @@ namespace App\Dto;
 
 class ToursFilters implements CacheableDto
 {
-    public ?string $slug = null;
+    public string $slug;
 
-    public ?float $priceFrom = null;
+    public ?int $priceFrom = null;
 
-    public ?float $priceTo = null;
+    public ?int $priceTo = null;
 
     public ?string $dateFrom = null;
 
     public ?string $dateTo = null;
 
-    public ?string $sortPrice = null;
+    public ?string $sortPrice = 'asc';
 
-    public function getSlug(): ?string
+    public function getSlug(): string
     {
         return $this->slug;
     }
 
-    public function setSlug(?string $slug): ToursFilters
+    public function setSlug(string $slug): ToursFilters
     {
         $this->slug = $slug;
 
         return $this;
     }
 
-    public function getPriceFrom(): ?float
+    public function getPriceFrom(): ?int
     {
         return $this->priceFrom;
     }
 
-    public function setPriceFrom(?float $priceFrom): ToursFilters
+    public function setPriceFrom(?int $priceFrom): ToursFilters
     {
         $this->priceFrom = $priceFrom;
 
         return $this;
     }
 
-    public function getPriceTo(): ?float
+    public function getPriceTo(): ?int
     {
         return $this->priceTo;
     }
 
-    public function setPriceTo(?float $priceTo): ToursFilters
+    public function setPriceTo(?int $priceTo): ToursFilters
     {
         $this->priceTo = $priceTo;
 
@@ -76,7 +76,7 @@ class ToursFilters implements CacheableDto
         return $this;
     }
 
-    public function getSortPrice(): ?string
+    public function getSortPrice(): string
     {
         return $this->sortPrice;
     }

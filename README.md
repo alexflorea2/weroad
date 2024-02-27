@@ -6,9 +6,9 @@
 
 First, clone the repository to your local machine:
 
-```git clone <repository-url>```
-
 ### Build and Start Containers
+
+Rename ```.env.example``` to ```.env```
 
 Run the following command to build and start the Docker containers. This command also detaches the containers, allowing
 them to run in the background:

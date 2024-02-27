@@ -31,7 +31,7 @@ class SeedFromJson extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         DB::transaction(function () {
             $this->seedRoles();
@@ -43,7 +43,7 @@ class SeedFromJson extends Command
         $this->info('Database seeded successfully from JSON files.');
     }
 
-    protected function seedRoles()
+    protected function seedRoles(): void
     {
         $jsonPath = database_path('data/roles.json');
         $roles = json_decode(file_get_contents($jsonPath), true);
@@ -58,7 +58,7 @@ class SeedFromJson extends Command
         $this->info('Roles seeded!');
     }
 
-    protected function seedUsers()
+    protected function seedUsers(): void
     {
         $jsonPath = database_path('data/users.json');
         $users = json_decode(file_get_contents($jsonPath), true);
@@ -77,7 +77,7 @@ class SeedFromJson extends Command
         $this->info('Roles seeded!');
     }
 
-    protected function seedTravels()
+    protected function seedTravels(): void
     {
         $jsonPath = database_path('data/travels.json');
         $travels = json_decode(file_get_contents($jsonPath), true);
@@ -107,7 +107,7 @@ class SeedFromJson extends Command
         $this->info('Travels and associated moods seeded!');
     }
 
-    protected function seedTours()
+    protected function seedTours(): void
     {
         $jsonPath = database_path('data/tours.json');
         $tours = json_decode(file_get_contents($jsonPath), true);

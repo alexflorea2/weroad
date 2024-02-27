@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateTourRequest;
 use App\Http\Resources\TourResource;
 use App\Services\ToursService;
+use Illuminate\Http\JsonResponse;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -20,7 +21,7 @@ class ToursController extends Controller
 
     }
 
-    public function createTour(CreateTourRequest $request)
+    public function createTour(CreateTourRequest $request): TourResource|JsonResponse
     {
         $validated = $request->validated();
 

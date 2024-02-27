@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 class CheckUserRole
 {
@@ -12,7 +14,7 @@ class CheckUserRole
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle($request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         foreach ($roles as $role) {
             $roleNames = explode(',', $role);

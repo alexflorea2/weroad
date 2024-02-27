@@ -10,21 +10,21 @@ class ToursQueryBuilder extends Builder
 
     final public const SORT_DESCENDING = 'desc';
 
-    public function filterBySlug(string $slug): static
+    public function filterBySlug(string $slug): ToursQueryBuilder
     {
         return $this->whereHas('travel', function ($query) use ($slug) {
             $query->where('slug', $slug);
         });
     }
 
-    public function public($isPublic = true): static
+    public function public(bool $isPublic = true): ToursQueryBuilder
     {
         return $this->whereHas('travel', function ($query) use ($isPublic) {
             $query->where('isPublic', $isPublic);
         });
     }
 
-    public function priceRange($priceFrom = null, $priceTo = null): static
+    public function priceRange(?int $priceFrom = null, ?int $priceTo = null): ToursQueryBuilder
     {
         if (! is_null($priceFrom)) {
             $this->where('price', '>=', $priceFrom * 100);
@@ -37,7 +37,7 @@ class ToursQueryBuilder extends Builder
         return $this;
     }
 
-    public function dateRange($dateFrom = null, $dateTo = null): static
+    public function dateRange(?string $dateFrom = null, ?string $dateTo = null): ToursQueryBuilder
     {
         if (! is_null($dateFrom)) {
             $this->where('startingDate', '>=', $dateFrom);
@@ -50,7 +50,7 @@ class ToursQueryBuilder extends Builder
         return $this;
     }
 
-    public function sortByPrice(string $direction = self::SORT_ASCENDING): static
+    public function sortByPrice(string $direction = self::SORT_ASCENDING): ToursQueryBuilder
     {
         return $this->orderBy('price', $direction);
     }

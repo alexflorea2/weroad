@@ -2,13 +2,32 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
+/**
+ * Class Travel
+ *
+ * @property string $id
+ * @property string $name
+ * @property string $slug
+ * @property string $description
+ * @property int $numberOfDays
+ * @property int $numberOfNights
+ * @property bool $isPublic
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Collection|Tour[] $tours
+ * @property Collection|Mood[] $moods
+ */
 class Travel extends UuidModel
 {
     protected $table = 'travels';
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
@@ -25,7 +44,7 @@ class Travel extends UuidModel
         });
     }
 
-    protected static function generateUniqueSlug($title)
+    protected static function generateUniqueSlug(string $title): string
     {
         $slug = Str::slug($title);
         $count = static::where('slug', $slug)->count();
@@ -33,7 +52,10 @@ class Travel extends UuidModel
         return $count ? "{$slug}-{$count}" : $slug;
     }
 
-    public function moods()
+    /**
+     * @return BelongsToMany<Mood>
+     */
+    public function moods(): BelongsToMany
     {
         return $this->belongsToMany(
             Mood::class,
@@ -44,7 +66,10 @@ class Travel extends UuidModel
             ->withPivot('weight');
     }
 
-    public function tours()
+    /**
+     * @return HasMany<Tour>
+     */
+    public function tours(): HasMany
     {
         return $this->hasMany(Tour::class, 'travelId');
     }

@@ -4,73 +4,80 @@ namespace App\Dto;
 
 class TravelFromRequestDto
 {
-    public ?string $title = null;
+    public string $title = '';
 
-    public ?int $numberOfDays = null;
+    public int $numberOfDays;
 
-    public ?string $description = null;
+    public string $description = '';
 
-    public ?array $moods = [];
+    /**
+     * @var mixed[]
+     */
+    public array $moods = [];
 
-    public ?bool $isPublic = false;
+    public bool $isPublic = false;
 
-    public function getMoods(): ?array
+    /**
+     * @return mixed[]|null
+     */
+    public function getMoods(): array
     {
         return $this->moods;
     }
 
-    public function setMoods(?array $moods): TravelFromRequestDto
+    /**
+     * @param  mixed[]  $moods
+     * @return $this
+     */
+    public function setMoods(array $moods): TravelFromRequestDto
     {
         $this->moods = $moods;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle(?string $title): TravelFromRequestDto
+    public function setTitle(string $title): TravelFromRequestDto
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getNumberOfDays(): ?float
+    public function getNumberOfDays(): int
     {
         return $this->numberOfDays;
     }
 
-    public function setNumberOfDays(?float $numberOfDays): TravelFromRequestDto
+    public function setNumberOfDays(int $numberOfDays): TravelFromRequestDto
     {
         $this->numberOfDays = $numberOfDays;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    public function setDescription(?string $description): TravelFromRequestDto
+    public function setDescription(string $description): TravelFromRequestDto
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getIsPublic(): ?bool
+    public function getIsPublic(): bool
     {
         return $this->isPublic;
     }
 
-    /**
-     * @return TourFromRequestDto
-     */
-    public function setIsPublic(?bool $isPublic): TravelFromRequestDto
+    public function setIsPublic(bool $isPublic): TravelFromRequestDto
     {
         $this->isPublic = $isPublic;
 

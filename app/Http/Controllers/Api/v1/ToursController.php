@@ -85,7 +85,7 @@ class ToursController extends Controller
             ->setDateTo($request->get('dateTo'))
             ->setPriceFrom($request->get('priceFrom'))
             ->setPriceTo($request->get('priceTo'))
-            ->setSortPrice($request->get('sortPrice'));
+            ->setSortPrice($request->get('sortPrice','asc'));
 
         $cacheKey = $requestFilters->toCacheKey();
         $cacheTime = 600;

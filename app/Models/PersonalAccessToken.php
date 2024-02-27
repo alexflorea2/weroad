@@ -14,7 +14,7 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
 
     public $incrementing = false;
 
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
 

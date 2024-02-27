@@ -6,11 +6,13 @@ ARG uid
 RUN apt update && apt install -y \
     git \
     curl \
+    libzip-dev \
+    zip  \
     libpng-dev \
     libonig-dev \
     libxml2-dev
 RUN apt clean && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 # Install the Redis extension
 RUN pecl install redis && docker-php-ext-enable redis
 

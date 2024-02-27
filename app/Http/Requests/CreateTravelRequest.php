@@ -13,6 +13,10 @@ class CreateTravelRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (! $this->user()) {
+            return false;
+        }
+
         return $this->user()->role->name = Role::ROLE_ADMIN;
     }
 
