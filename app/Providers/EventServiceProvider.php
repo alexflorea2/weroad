@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\TourCreated;
+use App\Events\TourDeleted;
+use App\Events\TourEdited;
+use App\Events\TravelCreated;
+use App\Events\TravelDeleted;
+use App\Events\TravelEdited;
+use App\Listeners\ClearToursCache;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +24,24 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        TourCreated::class=>[
+            ClearToursCache::class,
+        ],
+        TourEdited::class=>[
+            ClearToursCache::class,
+        ],
+        TourDeleted::class=>[
+            ClearToursCache::class,
+        ],
+        TravelCreated::class=>[
+            ClearToursCache::class,
+        ],
+        TravelEdited::class=>[
+            ClearToursCache::class,
+        ],
+        TravelDeleted::class=>[
+            ClearToursCache::class,
         ],
     ];
 

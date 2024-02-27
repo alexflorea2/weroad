@@ -16,6 +16,15 @@ services:
       - ./:/var/www/html
     networks:
       - alex-weroad-network
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - alex-weroad-network
 
   nginx:
     image: nginx:alpine

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 // API Version 1
 Route::prefix('v1')->group(function () {
     // Public routes
-    Route::get('/tours', [ToursController::class, 'list']);
+    Route::get('/tours/{tavelSlug}', [ToursController::class, 'list']);
 
     // Protected routes
     Route::middleware('auth:sanctum')->group(function () {

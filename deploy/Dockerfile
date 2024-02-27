@@ -11,6 +11,8 @@ RUN apt update && apt install -y \
     libxml2-dev
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+# Install the Redis extension
+RUN pecl install redis && docker-php-ext-enable redis
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -18,8 +20,10 @@ RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user
 
-WORKDIR /var/www
-
+WORKDIR /var/www/html
+COPY . /var/www/html
+RUN composer install --optimize-autoloader --no-dev
+RUN chown -R www-data:www-data /var/www
 USER $user
 
 EXPOSE 9000

@@ -19,4 +19,9 @@ class Travel extends UuidModel
         )
             ->withPivot('weight');
     }
+
+    public function tours()
+    {
+        return $this->hasMany(Tour::class, 'travelId');
+    }
 }

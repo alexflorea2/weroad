@@ -95,7 +95,7 @@ class SeedFromJson extends Command
             $tour->name = $tourData['name'];
             $tour->startingDate = $tourData['startingDate'];
             $tour->endingDate = $tourData['endingDate'];
-            $tour->price = $tourData['price'];
+            $tour->price = $tourData['price'] / 100;
             $tour->save();
         }
 

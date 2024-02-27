@@ -1,3 +1,3 @@
 ### Get tours
-GET http://localhost/api/v1/tours
+GET http://localhost/api/v1/tours/jordan-360
 Accept: application/json

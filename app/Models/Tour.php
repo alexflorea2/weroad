@@ -2,9 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\QueryBuilders\ToursQueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
 
 class Tour extends UuidModel
 {
+    /**
+     * @method static \App\QueryBuilders\ToursQueryBuilder query()
+     */
+    public function newEloquentBuilder($query): Builder
+    {
+        return new ToursQueryBuilder($query);
+    }
+
+    public function travel()
+    {
+        return $this->belongsTo(Travel::class, 'travelId');
+    }
+
+    public function getPriceAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = $value * 100;
+    }
 }

@@ -12,7 +12,6 @@ class TravelMoodPivot extends Pivot
 
     public static function booted() {
         static::creating(function ($model) {
-            dd($model);
             $model->setAttribute($model->getKeyName(), Str::orderedUuid());
         });
     }
