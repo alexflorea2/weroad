@@ -24,7 +24,7 @@ RUN mkdir -p /home/$user/.composer && \
 
 WORKDIR /var/www/html
 COPY . /var/www/html
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --optimize-autoloader  --no-interaction
 RUN chown -R www-data:www-data /var/www
 USER $user
 
