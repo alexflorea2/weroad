@@ -32,6 +32,7 @@ the following credentials for both:
 - Editor: `editor@weroad.com` (password: `editor@weroad.com`)
 
 To seed the database, run:
+```php artisan migrate``` followed by
 ```php artisan app:seed-from-json```
 
 
