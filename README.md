@@ -21,7 +21,7 @@ them to run in the background:
 
 To run tests, execute the following command from within the `alex_weroad_app` Docker container:
 
-```vendor/bin/phpunit;```
+```vendor/bin/phpunit --testdox```
 
 ## Database Seeding
 
