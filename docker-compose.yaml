@@ -14,7 +14,7 @@ services:
     tty: true
     volumes:
       - ./:/var/www/html
-      - /var/www/vendor/
+      - /var/www/html/vendor
     networks:
       - alex-weroad-network
     depends_on:
